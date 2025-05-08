@@ -1,0 +1,67 @@
+﻿@model PerfectedCheck.Models.NoteModel
+@{
+
+}
+<div class="card">
+	<ul class="list-group list-group-flush">
+		<nav>
+			<ul class="nav nav-pills nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Edit</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Save</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Copy</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Rename</a>
+				</li>
+				<li class="nav-item" style="color: red">
+					<a class="nav-link" href="#">Delete</a>
+				</li>
+
+			</ul>
+		</nav>
+	</ul>
+	<div class="card-body">
+		<p class="h1">@Model.Title</p>
+	</div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">Author : Bob</li>
+	</ul>
+	
+	<div class="card-body">
+		<textarea id="noteContent" class="form-control" style="resize: none; overflow:hidden;">@Model.Content</textarea>
+	</div>
+
+	<script>
+		const textarea = document.getElementById('noteContent');
+
+		textarea.addEventListener('input', function () {
+			this.style.height = 'auto';
+			this.style.height = (this.scrollHeight) + 'px';
+		});
+	</script>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Understood</button>
+			</div>
+		</div>
+	</div>
+</div>

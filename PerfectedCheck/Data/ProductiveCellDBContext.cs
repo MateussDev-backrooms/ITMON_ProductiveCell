@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PerfectedCheck.Models;
 
 namespace PerfectedCheck.Data
 {
-    public class ProductiveCellDBContext : DbContext
+    public class ProductiveCellDBContext : IdentityDbContext<UserModel>
     {
-        //public PerfectedCheckContext(DbContextOptions<PerfectedCheckContext> options) :base(options) { }
 
         public DbSet<NoteModel> Notes { get; set; }
         public DbSet<TaskModel> Tasks { get; set; }
@@ -16,7 +16,3 @@ namespace PerfectedCheck.Data
         }
     }
 }
-
-
-//Make all models
-// > add Migration

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PerfectedCheck.Data;
 using PerfectedCheck.Models;
 
@@ -23,11 +24,15 @@ namespace PerfectedCheck.Controllers
 
             return View(note);
         }
-        //public IActionResult Index()
-        //{
-        //    //TODO: Pull a note model from database using an ID given via a 
-        //    var note = new NoteModel() { Content = "blah blah blah", Title = "New note" };
-        //    return View(note);
-        //}
+
+        
+        public IActionResult BrowseNotes()
+        {
+            var notes = _context.Notes.ToList();
+
+            if(_context == null) { throw new Exception("DB Context is null"); }
+            return View(notes);
+        }
+        
     }
 }

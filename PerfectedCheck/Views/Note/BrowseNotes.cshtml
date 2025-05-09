@@ -1,0 +1,24 @@
+﻿
+@{
+	@model IEnumerable<PerfectedCheck.Models.NoteModel>
+}
+
+<h1>My Notes</h1>
+
+<div class="container align-content-center">
+    <div class="row g-2">
+        @foreach(var note in Model)
+        {
+            <div class="card col-6 m-1" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item h4">@note.Title</li>
+                </ul>
+                <div class="card-body">
+                    @* <p class="list-group-item text-body-secondary">@note.Owner.Username</p> *@
+                    <p class="card-text">@note.Content.Substring(0, Math.Min(note.Content.Length, 100))</p>
+                    <a href="@Url.Action("ViewNote", "Notes", new { id = note.Id })" class="btn btn-primary">View Note</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

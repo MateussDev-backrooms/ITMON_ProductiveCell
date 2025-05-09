@@ -48,6 +48,16 @@ app.MapControllerRoute(
     defaults: new { controller = "Note", action = "BrowseNotes" });
 
 app.MapControllerRoute(
+    name: "edit_note",
+    pattern: "edit_note",
+    defaults: new { controller = "Note", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "delete",
+    pattern: "delete",
+    defaults: new { controller = "Note", action = "Delete" });
+
+app.MapControllerRoute(
     name: "login",
     pattern: "login",
     defaults: new { controller = "Account", action = "Login" });

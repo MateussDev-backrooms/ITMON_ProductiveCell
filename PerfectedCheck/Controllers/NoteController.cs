@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Mysqlx.Crud;
 using PerfectedCheck.Data;
 using PerfectedCheck.Models;
 
@@ -105,30 +106,46 @@ namespace PerfectedCheck.Controllers
 
             }
 
-            var new_note = new NoteModel
-            {
-                Id = GenerateRandomID(),
-                Owner = user,
-                Title = model.Title,
-                Content = model.Content,
-                CreatedTime = DateTime.Now,
-            };
+            var note = await _context.Notes.FindAsync(model.Id);
+            if (note == null) return NotFound();
+            note.Title = model.Title;
+            note.Content = model.Content;
 
-            if (new_note.Title == "")
-            {
-                new_note.Title = "New Note";
-            }
+            
 
-            _context.Notes.Add(new_note);
-            var prog = await _context.SaveChangesAsync();
-            return RedirectToAction("ViewNote", new { id = new_note.Id });
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ViewNote", new { id = model.Id });
 
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Forbid();
+
+            }
+
+            var note = await _context.Notes.FindAsync(id);
+            if (note == null) return NotFound();
+            return View(note);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Forbid();
+
+            var note = await _context.Notes.FindAsync(id);
+            if (note == null) return NotFound();
+
+            _context.Notes.Remove(note);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
         }
 
 

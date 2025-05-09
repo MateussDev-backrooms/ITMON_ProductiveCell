@@ -2,8 +2,9 @@
 @{
 }
 <div class="card">
-	<form asp-controller="Note" asp-action="Create" method="post">
+	<form asp-controller="Note" asp-action="Edit" method="post">
 		@Html.AntiForgeryToken()
+		<input type="hidden" asp-for="Id" />
 		<div class="card-body">
 			<div class="mb-3">
 
@@ -23,11 +24,22 @@
 		</ul>
 
 		<script>
-			const textarea = document.getElementById('noteContent');
+			document.addEventListener('DOMContentLoaded', function() {
+				const textarea = document.querySelector('textarea');
 
-			textarea.addEventListener('input', function () {
-				this.style.height = 'auto';
-				this.style.height = (this.scrollHeight) + 'px';
+				if (!textarea) return;
+
+				// Resize on input
+				textarea.addEventListener('input', function() {
+					this.style.height = 'auto';
+					this.style.height = (this.scrollHeight) + 'px';
+				});
+
+				// Resize immediately
+				if (textarea.value.trim() !== '') {
+					textarea.style.height = 'auto';
+					textarea.style.height = (textarea.scrollHeight) + 'px';
+				}
 			});
 		</script>
 		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))

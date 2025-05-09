@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PerfectedCheck.Data;
 
@@ -10,9 +11,11 @@ using PerfectedCheck.Data;
 namespace PerfectedCheck.Migrations
 {
     [DbContext(typeof(ProductiveCellDBContext))]
-    partial class ProductiveCellDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250509151933_Migrator_5")]
+    partial class Migrator_5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

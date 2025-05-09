@@ -1,0 +1,44 @@
+﻿@model PerfectedCheck.Models.RegisterViewModel
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="card">
+
+	<h1 class="card-header">Create new account</h1>
+	<div class="card-body">
+		<form asp-action="Register" method="post">
+			<div class="mb-3">
+				<label asp-for="Username" class="form-label">Username</label>
+				<input type="text" class="form-control" asp-for="Username" aria-describedby="emailHelp">
+			</div>
+			<div class="mb-3">
+				<label asp-for="Email" class="form-label">Email address</label>
+				<input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp">
+			</div>
+			<div class="mb-3">
+				<label asp-for="Password" class="form-label">Password</label>
+				<input type="password" class="form-control" asp-for="Password">
+				@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+				{
+					<div class="text-danger">@error.ErrorMessage</div>
+				}
+			</div>
+			<div class="mb-3">
+				<label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+				<input type="password" class="form-control" asp-for="ConfirmPassword">
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+
+		<a asp-controller="Account" asp-action="Login">Already have an account?</a>
+	</div>
+</div>
+
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

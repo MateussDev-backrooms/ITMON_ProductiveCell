@@ -1,0 +1,36 @@
+﻿@model PerfectedCheck.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="card">
+
+    <h1 class="card-header">Login</h1>
+    <div class="card-body">
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Username</label>
+                <input type="text" class="form-control" asp-for="Username"/>
+                <span asp-validation-for="Username"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" asp-for="Password">
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                <input type="checkbox" class="form-check-input" asp-for="RememberMe">
+            </div>
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+
+        <a asp-controller="Account" asp-action="Register">Don't have an account?</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

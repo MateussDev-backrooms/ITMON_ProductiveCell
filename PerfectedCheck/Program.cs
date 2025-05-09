@@ -16,6 +16,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;             
 });
 
 var app = builder.Build();
@@ -44,6 +46,19 @@ app.MapControllerRoute(
     name: "my_notes",
     pattern: "my_notes",
     defaults: new { controller = "Note", action = "BrowseNotes" });
+
+app.MapControllerRoute(
+    name: "login",
+    pattern: "login",
+    defaults: new { controller = "Account", action = "Login" });
+app.MapControllerRoute(
+    name: "register",
+    pattern: "register",
+    defaults: new { controller = "Account", action = "Register" });
+app.MapControllerRoute(
+    name: "logout",
+    pattern: "logout",
+    defaults: new { controller = "Account", action = "Logout" });
 
 
 app.MapControllerRoute(

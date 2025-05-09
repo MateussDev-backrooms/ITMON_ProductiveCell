@@ -9,6 +9,7 @@ namespace PerfectedCheck.Data
 
         public DbSet<NoteModel> Notes { get; set; }
         public DbSet<TaskModel> Tasks { get; set; }
+        public DbSet<TaskCellModel> TaskCells { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

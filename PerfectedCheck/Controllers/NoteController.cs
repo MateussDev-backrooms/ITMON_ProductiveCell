@@ -33,6 +33,24 @@ namespace PerfectedCheck.Controllers
             if(_context == null) { throw new Exception("DB Context is null"); }
             return View(notes);
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(NoteModel note)
+        {
+            if (ModelState.IsValid)
+            {
+                // If you don't have auth yet, maybe set OwnerId to a dummy value for now
+                //note.OwnerId = 1; // Placeholder owner
+
+                note.CreatedTime = DateTime.UtcNow; // optional timestamp
+                _context.Add(note);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(ViewNote), new { id = note.Id });
+            }
+            return View(note);
+        }
+
     }
 }

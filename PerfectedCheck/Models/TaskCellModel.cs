@@ -2,13 +2,17 @@
 
 namespace PerfectedCheck.Models
 {
-    public class NoteModel
+    public class TaskCellModel
     {
         [Key]
         public int Id { get; set; }
+
+        public string CellName { get; set; }
+        public string CellDescription { get; set; }
         public DateTime CreatedTime { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
+        public DateTime DueTime { get; set; }
+
         public virtual UserModel Owner { get; set; }
+
     }
 }

@@ -133,3 +133,8 @@ D:\Programmr\PerfectedCheck\PerfectedCheck\obj\Debug\net8.0\refint\PerfectedChec
 D:\Programmr\PerfectedCheck\PerfectedCheck\obj\Debug\net8.0\PerfectedCheck.pdb
 D:\Programmr\PerfectedCheck\PerfectedCheck\obj\Debug\net8.0\PerfectedCheck.genruntimeconfig.cache
 D:\Programmr\PerfectedCheck\PerfectedCheck\obj\Debug\net8.0\ref\PerfectedCheck.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

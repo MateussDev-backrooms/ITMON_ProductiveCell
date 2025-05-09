@@ -8,7 +8,9 @@ namespace PerfectedCheck.Models
         public int Id { get; set; }
 
         public string Task { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
         public bool IsCompleted { get; set; }
-        public virtual UserModel Owner { get; set; }
+        public virtual UserModel Creator { get; set; }
+        public virtual TaskCellModel ParentCell { get; set; }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model PerfectedCheck.Models.NoteModel
+@{
+}
+<div class="card">
+	<form asp-controller="Note" asp-action="Create" method="post">
+		@Html.AntiForgeryToken()
+		<div class="card-body">
+			<div class="mb-3">
+
+				<input type="text" class="form-control" placeholder="New Note" asp-for="Title" />
+			</div>
+		</div>
+
+		<div class="card-body">
+			<textarea asp-for="Content" id="noteContent" class="form-control" style="resize: none; overflow:hidden;" rows="16"></textarea>
+		</div>
+
+		<ul class="list-group list-group-flush">
+			<nav class="nav nav-pills nav-justified m-1">
+				<button type="submit" class="nav-link active m-1">Save & Publish</button>
+				<a class="nav-link active bg-danger m-1" asp-controller="Note" asp-action="BrowseNotes">Cancel</a>
+			</nav>
+		</ul>
+
+		<script>
+			const textarea = document.getElementById('noteContent');
+
+			textarea.addEventListener('input', function () {
+				this.style.height = 'auto';
+				this.style.height = (this.scrollHeight) + 'px';
+			});
+		</script>
+		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+		{
+			<div class="text-danger">@error.ErrorMessage</div>
+		}
+	</form>
+
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

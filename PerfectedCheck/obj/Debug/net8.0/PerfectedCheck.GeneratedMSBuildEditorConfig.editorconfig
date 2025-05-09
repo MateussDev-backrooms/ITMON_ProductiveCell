@@ -40,6 +40,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90ZVxCcm93c2VOb3Rlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Programmr/PerfectedCheck/PerfectedCheck/Views/Note/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90ZVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programmr/PerfectedCheck/PerfectedCheck/Views/Note/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90ZVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Programmr/PerfectedCheck/PerfectedCheck/Views/Note/ViewNote.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90ZVxWaWV3Tm90ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

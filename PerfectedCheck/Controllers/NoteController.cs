@@ -1,26 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PerfectedCheck.Data;
 using PerfectedCheck.Models;
 
 namespace PerfectedCheck.Controllers
 {
-    //The note controller is used to control functions related to a Singular note on a given page
     public class NoteController : Controller
     {
         private readonly ProductiveCellDBContext _context;
-        public NoteController(ProductiveCellDBContext context) {
+        private readonly UserManager<UserModel> _userManager;
+
+        public NoteController(ProductiveCellDBContext context, UserManager<UserModel> userManager) {
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult ViewNote(int id)
+        public async Task<IActionResult> ViewNote(int id)
         {
-            var note = _context.Notes.FirstOrDefault(x => x.Id == id);
+            var note = await _context.Notes.Include(n => n.Owner).FirstOrDefaultAsync(x => x.Id == id);
+            if (note == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.GetUserAsync(User);
 
-            //TODO: Check if the note's owner is matcing the currently logged in user's ID
-            //var canEdit = note.Owner.UID == 1;
-            ViewBag.CanEdit = true;
+            if (user != null)
+            {
+                ViewBag.CanEdit = note.Owner.Id == user?.Id;
+                ViewBag.Username = note.Owner.NormalizedUserName;
+            } else
+            {
+                ViewBag.CanEdit = false;
+
+            }
+            
 
             return View(note);
         }
@@ -34,23 +50,88 @@ namespace PerfectedCheck.Controllers
             return View(notes);
         }
 
+        private int GenerateRandomID()
+        {
+            Random rnd = new();
+            return rnd.Next(128, 2147483647);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(NoteModel note)
+        public async Task<IActionResult> Create(NoteModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                // If you don't have auth yet, maybe set OwnerId to a dummy value for now
-                //note.OwnerId = 1; // Placeholder owner
+                return Forbid();
 
-                note.CreatedTime = DateTime.UtcNow; // optional timestamp
-                _context.Add(note);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(ViewNote), new { id = note.Id });
             }
-            return View(note);
+
+            var new_note = new NoteModel
+            {
+                Id = GenerateRandomID(),
+                Owner = user,
+                Title = model.Title,
+                Content = model.Content,
+                CreatedTime = DateTime.Now,
+            };
+
+            if(new_note.Title == "")
+            {
+                new_note.Title = "New Note";
+            }
+
+            _context.Notes.Add(new_note);
+            var prog = await _context.SaveChangesAsync();
+            return RedirectToAction("ViewNote", new { id = new_note.Id });
+            
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(NoteModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Forbid();
+
+            }
+
+            var new_note = new NoteModel
+            {
+                Id = GenerateRandomID(),
+                Owner = user,
+                Title = model.Title,
+                Content = model.Content,
+                CreatedTime = DateTime.Now,
+            };
+
+            if (new_note.Title == "")
+            {
+                new_note.Title = "New Note";
+            }
+
+            _context.Notes.Add(new_note);
+            var prog = await _context.SaveChangesAsync();
+            return RedirectToAction("ViewNote", new { id = new_note.Id });
+
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+
 
     }
 }

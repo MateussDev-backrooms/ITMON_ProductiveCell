@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PerfectedCheck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+521d6bdb08bfb0527937f33c6ca4f47e6b2c9b81")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14cd5aa52554e8233c280ebe594a6cd6d5119074")]
 [assembly: System.Reflection.AssemblyProductAttribute("PerfectedCheck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PerfectedCheck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

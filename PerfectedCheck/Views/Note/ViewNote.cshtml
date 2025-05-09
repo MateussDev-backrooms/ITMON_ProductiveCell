@@ -3,47 +3,38 @@
 
 }
 <div class="card">
-	<ul class="list-group list-group-flush">
-		<nav>
-			<ul class="nav nav-pills nav-fill">
-				<li class="nav-item">
-					<a class="nav-link" href="#">Edit</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Save</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Copy</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Rename</a>
-				</li>
-				<li class="nav-item" style="color: red">
-					<a class="nav-link" href="#">Delete</a>
-				</li>
+	@if(ViewBag.CanEdit)
+	{
+		<ul class="list-group list-group-flush">
+			<nav>
+				<ul class="nav nav-pills nav-fill">
+					<li class="nav-item">
+						<a class="nav-link" href="#">Edit</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-danger" href="#">Delete</a>
+					</li>
 
-			</ul>
-		</nav>
-	</ul>
+				</ul>
+			</nav>
+		</ul>
+	}
+	
 	<div class="card-body">
 		<p class="h1">@Model.Title</p>
 	</div>
-	<ul class="list-group list-group-flush">
-		<li class="list-group-item">Author : Bob</li>
-	</ul>
 	
 	<div class="card-body">
-		<textarea id="noteContent" class="form-control" style="resize: none; overflow:hidden;">@Model.Content</textarea>
+		<textarea id="tar" onload="reloadRender" class="form-control" rows="16" style="resize:none" readonly>@Model.Content</textarea>
+		<script>
+			function reloadRender() {
+				const texarea = document.getElementById("tar")
+
+				texarea.style.height = 'auto';
+				texarea.style.height = (this.scrollHeight) + 'px';
+			}
+		</script>
 	</div>
-
-	<script>
-		const textarea = document.getElementById('noteContent');
-
-		textarea.addEventListener('input', function () {
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
-		});
-	</script>
 
 </div>
 
@@ -65,3 +56,9 @@
 		</div>
 	</div>
 </div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

@@ -30,11 +30,12 @@
 							<div class="card-body" style="background-color: #f2f2e3">
 								@* <p class="list-group-item text-body-secondary">@note.Owner.Username</p> *@
 								<p class="card-text">@note.Content.Substring(0, Math.Min(note.Content.Length, 100))</p>
-								<a asp-controller="Note" asp-action="ViewNote" asp-route-id="@note.Id" class="btn btn-primary">View Note</a>
 							</div>
 
 							<div class="card-footer">
-								@note.CreatedTime.ToLongDateString() @note.CreatedTime.ToShortTimeString()
+								<a asp-controller="Note" asp-action="ViewNote" asp-route-id="@note.Id" class="btn btn-primary align-baseline">View Note</a>
+								<br />
+								<i>@note.CreatedTime.ToLongDateString() @note.CreatedTime.ToShortTimeString()</i>
 							</div>
 						</div>
 					}

@@ -36,26 +36,27 @@ app.UseStaticFiles();
 
 app.UseAuthorization();
 
-//app.MapStaticAssets();
+
+// Notes
+
 app.MapControllerRoute(
     name: "note",
     pattern: "note",
     defaults: new { controller = "Note", action = "ViewNote" });
-
 app.MapControllerRoute(
     name: "my_notes",
     pattern: "my_notes",
     defaults: new { controller = "Note", action = "BrowseNotes" });
-
 app.MapControllerRoute(
     name: "edit_note",
     pattern: "edit_note",
     defaults: new { controller = "Note", action = "Edit" });
-
 app.MapControllerRoute(
     name: "delete",
     pattern: "delete",
     defaults: new { controller = "Note", action = "Delete" });
+
+//Authentication
 
 app.MapControllerRoute(
     name: "login",
@@ -70,6 +71,7 @@ app.MapControllerRoute(
     pattern: "logout",
     defaults: new { controller = "Account", action = "Logout" });
 
+//Default routing
 
 app.MapControllerRoute(
     name: "default",

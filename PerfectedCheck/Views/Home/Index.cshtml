@@ -5,46 +5,34 @@
 }
 
 <h1 class="display-1 text-center">Welcome to Productive Cell</h1>
-<h3 class="text-center">What should we do today?</h3>
 
-<div class="container px-4">
-    <div class="row gx-5">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-
-                    <h2>Manage notes:</h2>
-                    <div class="row gx-1">
-                        <div class="col">
-                            <button class="btn btn-primary">Create new note</button>
-                            <button class="btn btn-primary">Open note list</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
+@if(User.Identity.IsAuthenticated)
+{
+    <h3 class="text-center">What should we do today?</h3>
+    <div class="container px-4">
+        <div class="card">
+            <div class="card-body">
+                <h2>Manage notes:</h2>
+                <div class="row">
                     @foreach (var note in Model.Notes)
                     {
-                        <div class="card col-6 m-1" style="width: 18rem;">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item h4">@note.Title</li>
+                        <div class="card col-4 m-1 p-0" style="width: 16rem">
+                            <ul class="list-group list-group-flush" >
+                                <li class="list-group-item" style="background-color: #dbc597">@note.Title</li>
                             </ul>
-                            <div class="card-body">
+                            <div class="card-body" style="background-color: #f2f2e3">
                                 @* <p class="list-group-item text-body-secondary">@note.Owner.Username</p> *@
                                 <p class="card-text">@note.Content.Substring(0, Math.Min(note.Content.Length, 100))</p>
-                                <a href="@Url.Action("ViewNote", "Notes", new { id = note.Id })" class="btn btn-primary">View Note</a>
+                                <a asp-controller="Note" asp-action="ViewNote" asp-route-id="@note.Id" class="btn btn-primary">View Note</a>
                             </div>
                         </div>
                     }
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
 
-                    <h2>Manage Task cells:</h2>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
+} else
+{
+    <h3 class="text-center">To use Productive cell you have to Log In/Sign up</h3>
+}

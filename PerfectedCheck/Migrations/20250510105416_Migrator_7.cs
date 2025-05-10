@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace PerfectedCheck.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrator_5 : Migration
+    public partial class Migrator_7 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -216,8 +216,7 @@ namespace PerfectedCheck.Migrations
                 name: "Tasks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
                     Task = table.Column<string>(type: "longtext", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsCompleted = table.Column<bool>(type: "tinyint(1)", nullable: false),

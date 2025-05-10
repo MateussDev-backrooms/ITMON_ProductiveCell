@@ -17,8 +17,4 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.14" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\TaskView\" />
-  </ItemGroup>
-
 </Project>

@@ -11,8 +11,8 @@ using PerfectedCheck.Data;
 namespace PerfectedCheck.Migrations
 {
     [DbContext(typeof(ProductiveCellDBContext))]
-    [Migration("20250509151933_Migrator_5")]
-    partial class Migrator_5
+    [Migration("20250510105416_Migrator_7")]
+    partial class Migrator_7
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,9 +209,8 @@ namespace PerfectedCheck.Migrations
 
             modelBuilder.Entity("PerfectedCheck.Models.TaskModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -378,7 +377,7 @@ namespace PerfectedCheck.Migrations
                         .HasForeignKey("CreatorId");
 
                     b.HasOne("PerfectedCheck.Models.TaskCellModel", "ParentCell")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ParentCellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -386,6 +385,11 @@ namespace PerfectedCheck.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("ParentCell");
+                });
+
+            modelBuilder.Entity("PerfectedCheck.Models.TaskCellModel", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

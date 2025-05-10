@@ -206,9 +206,8 @@ namespace PerfectedCheck.Migrations
 
             modelBuilder.Entity("PerfectedCheck.Models.TaskModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -375,7 +374,7 @@ namespace PerfectedCheck.Migrations
                         .HasForeignKey("CreatorId");
 
                     b.HasOne("PerfectedCheck.Models.TaskCellModel", "ParentCell")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ParentCellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -383,6 +382,11 @@ namespace PerfectedCheck.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("ParentCell");
+                });
+
+            modelBuilder.Entity("PerfectedCheck.Models.TaskCellModel", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

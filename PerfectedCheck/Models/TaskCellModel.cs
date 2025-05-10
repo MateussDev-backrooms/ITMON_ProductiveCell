@@ -14,5 +14,7 @@ namespace PerfectedCheck.Models
 
         public virtual UserModel Owner { get; set; }
 
+        public virtual List<TaskModel> Tasks { get; set; }
+
     }
 }

@@ -32,7 +32,7 @@ namespace PerfectedCheck.Controllers
             if (user != null)
             {
                 ViewBag.CanEdit = note.Owner.Id == user?.Id;
-                ViewBag.Username = note.Owner.NormalizedUserName;
+                ViewBag.Username = note.Owner.UserName;
 
 
             } else
@@ -51,9 +51,15 @@ namespace PerfectedCheck.Controllers
         }
 
         
-        public IActionResult BrowseNotes()
+        public async Task<IActionResult> BrowseNotes()
         {
-            var notes = _context.Notes.ToList();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) { return View(new List<NoteModel>()); }
+            var notes = _context.Notes
+                .Include(n => n.Owner)
+                .OrderByDescending(n => n.CreatedTime)
+                .Where(n => n.Owner.Id == user.Id)
+                .ToList();
 
             if(_context == null) { throw new Exception("DB Context is null"); }
             return View(notes);

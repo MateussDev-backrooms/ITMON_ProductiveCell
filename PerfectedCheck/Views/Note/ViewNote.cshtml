@@ -41,23 +41,13 @@
 	
 	<div class="card-body">
 		<p class="h1">@Model.Title</p>
+		<p class="card-subtitle mb-2 text-body-secondary">Made by: @ViewBag.Username</p>
 	</div>
 	
-	<div class="card-body">
-		<textarea id="tar" onload="reloadRender" class="form-control" rows="16" style="resize:none; overflow:hidden" readonly>@Model.Content</textarea>
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				const textarea = document.querySelector('textarea');
-
-				if (!textarea) return;
-
-				// Resize immediately
-				if (textarea.value.trim() !== '') {
-					textarea.style.height = 'auto';
-					textarea.style.height = (textarea.scrollHeight) + 'px';
-				}
-			});
-		</script>
+	<div class="card m-2">
+		<div class="card-body">
+			@Html.Raw(ViewBag.HtmlContent)
+		</div>
 	</div>
 
 </div>

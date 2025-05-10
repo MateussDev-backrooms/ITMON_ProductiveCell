@@ -138,3 +138,4 @@ D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.AspNetCore
 D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Programmr\PerfectedCheck\PerfectedCheck\bin\Debug\net8.0\Markdig.dll

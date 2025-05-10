@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Markdig;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -32,11 +33,18 @@ namespace PerfectedCheck.Controllers
             {
                 ViewBag.CanEdit = note.Owner.Id == user?.Id;
                 ViewBag.Username = note.Owner.NormalizedUserName;
+
+
             } else
             {
                 ViewBag.CanEdit = false;
 
             }
+            // Convert Markdown to HTML
+            var pipeline = new MarkdownPipelineBuilder().Build();
+            var htmlContent = Markdown.ToHtml(note.Content, pipeline);
+
+            ViewBag.HtmlContent = htmlContent;
             
 
             return View(note);

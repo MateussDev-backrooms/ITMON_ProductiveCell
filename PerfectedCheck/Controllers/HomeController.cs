@@ -22,6 +22,7 @@ namespace PerfectedCheck.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //Load note view when user logged in. Load empty view if not
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {

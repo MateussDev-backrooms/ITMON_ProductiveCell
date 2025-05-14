@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<PerfectedCheck.Models.NoteModel>
+@using PerfectedCheck.Services
+@inject LoggedUserService loggedUserService
 @{
 }
 
@@ -7,7 +9,7 @@
 		<div class="list-group list-group-flush">
 			<nav class="nav nav-pills">
 				<h3 class="flex-fill">My notes</h3>
-				@if (User.Identity.IsAuthenticated)
+				@if (loggedUserService.IsLoggedIn)
 				{
 					<a class="nav-link active" asp-controller="Note" asp-action="Create" >New Note</a>
 				}
@@ -19,7 +21,7 @@
 	<div class="card mt-2">
 		<div class="card-body">
 			<div class="row justify-content-between">
-				@if (User.Identity.IsAuthenticated)
+				@if (loggedUserService.IsLoggedIn)
 				{
 					@foreach(var note in Model)
 					{

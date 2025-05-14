@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using PerfectedCheck.Services
+@inject LoggedUserService loggedUserService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +30,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="BrowseNotes">My Notes</a>
                             </li>
-                            @if (User.Identity.IsAuthenticated)
+                            @if (loggedUserService.IsLoggedIn)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>

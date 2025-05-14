@@ -4,12 +4,12 @@ using PerfectedCheck.Models;
 
 namespace PerfectedCheck.Data
 {
-    public class ProductiveCellDBContext : IdentityDbContext<UserModel>
+    public class ProductiveCellDBContext : DbContext
     {
 
         public DbSet<NoteModel> Notes { get; set; }
         public DbSet<TaskModel> Tasks { get; set; }
-        public DbSet<TaskCellModel> TaskCells { get; set; }
+        public DbSet<UserModel> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

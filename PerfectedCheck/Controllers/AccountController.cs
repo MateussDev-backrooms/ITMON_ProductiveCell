@@ -2,18 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PerfectedCheck.Models;
+using PerfectedCheck.Services;
 
 namespace PerfectedCheck.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<UserModel> _userManager;
-        private readonly SignInManager<UserModel> _signInManager;
+        private readonly UserService _userManager;
 
-        public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager)
+        public AccountController(UserService userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -29,31 +28,18 @@ namespace PerfectedCheck.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public IActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new UserModel { UserName = model.Username, Email = model.Email };
-                var register_result = await _userManager.CreateAsync(user, model.Password);
-
-                if (register_result.Succeeded)
+            _userManager.Create(model);
+            _userManager.LogIn(
+                new LoginViewModel
                 {
-                    // User successfully signed in
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    Console.WriteLine("Successfully signed in");
-                    return RedirectToAction("Index", "Home");
-                } else
-                {
-                    Console.WriteLine("Failed to register:");
-                    foreach(var err in register_result.Errors)
-                    {
-                        ModelState.AddModelError("", err.Description);
-                        Console.WriteLine($"Error: {err.Code} - {err.Description}");
-                    }
+                    Password = model.Password,
+                    Username = model.Username,
                 }
+                );
 
-            }
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -61,16 +47,7 @@ namespace PerfectedCheck.Controllers
         {
             if (ModelState.IsValid)
             {
-                var login_result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
-
-                if (login_result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to log in");
-                }
+                _userManager.LogIn(model);
 
             }
             return View(model);
@@ -79,7 +56,7 @@ namespace PerfectedCheck.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            _userManager.LogOut();
             return RedirectToAction("Index", "Home");
         }
     }

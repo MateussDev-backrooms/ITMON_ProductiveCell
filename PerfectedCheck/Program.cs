@@ -2,15 +2,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PerfectedCheck.Data;
 using PerfectedCheck.Models;
+using PerfectedCheck.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProductiveCellDBContext>();
-builder.Services.AddIdentity<UserModel, IdentityRole>()
-    .AddEntityFrameworkStores<ProductiveCellDBContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<PasswordHashingService, PasswordHashingService>();
+builder.Services.AddTransient<INoteService, NoteService>();
+
+builder.Services.AddSingleton<LoggedUserService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

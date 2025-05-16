@@ -11,6 +11,5 @@ namespace PerfectedCheck.Models
         public DateTime CreatedAt { get; set; }
         public bool IsCompleted { get; set; }
         public virtual UserModel Creator { get; set; }
-        public virtual TaskCellModel ParentCell { get; set; }
     }
 }

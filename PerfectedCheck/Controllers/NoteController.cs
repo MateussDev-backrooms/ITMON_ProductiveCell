@@ -12,13 +12,13 @@ namespace PerfectedCheck.Controllers
 {
     public class NoteController : Controller
     {
-        private readonly ProductiveCellDBContext _context;
+        
         private readonly UserService _userManager;
         private readonly NoteService _noteService;
 
-        public NoteController(ProductiveCellDBContext context,UserService userManager, NoteService noteService = null)
+        public NoteController(UserService userManager, NoteService noteService = null)
         {
-            _context = context;
+            
             _userManager = userManager;
             _noteService = noteService;
         }
@@ -29,12 +29,13 @@ namespace PerfectedCheck.Controllers
             //Pull note from note id
             NoteModel note = _noteService.GetNoteFromId(id);
             
-
-            ViewBag.Username = note.Owner.Username;
+            if(note == null) return NotFound();
+            
             //Convert Note content Markdown to HTML
             var pipeline = new MarkdownPipelineBuilder().Build();
             var htmlContent = Markdown.ToHtml(note.Content, pipeline);
 
+            ViewBag.CanEdit = note.Owner.Id == _userManager.GetMyLoggedUser().Id;
             ViewBag.HtmlContent = htmlContent;
             
 

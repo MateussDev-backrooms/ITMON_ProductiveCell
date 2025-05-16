@@ -30,30 +30,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="BrowseNotes">My Notes</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">My Todo list</a>
+                            </li>
                             @if (loggedUserService.IsLoggedIn)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
+                                    <a class="nav-link text-dark" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
                                 </li>
 
                                 
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Logging out?</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to log out?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             } else {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
@@ -69,6 +56,23 @@
             </nav>
         </div>
     </header>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Logging out?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

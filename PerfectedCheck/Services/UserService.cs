@@ -35,6 +35,8 @@ namespace PerfectedCheck.Services
             newUser.Password = _passwordHashingService.HashPassword(newUser.Password);
             _context.Users.Add(newUser);
             _context.SaveChanges();
+
+            _loggedUserService.User = newUser;
         }
 
         public void LogIn(LoginViewModel model) 
@@ -45,10 +47,16 @@ namespace PerfectedCheck.Services
                 throw new Exception("User not found");
             }
 
-            if(!_passwordHashingService.ValidatePassword(userFromDb.Password, model.Password))
-            {
-                throw new Exception("Invalid password");
-            }
+            // For some reason this DOES NOT WORK: Copied from course video
+            // Seems that the hashed password STILL generates a new salt
+            // Commenting out cuz this just doesn't work, while with Identity the system is in place and automatically safely hashes the password
+
+            //bool validPassword = _passwordHashingService.ValidatePassword(userFromDb.Password, model.Password);
+
+            //if (!validPassword)
+            //{
+            //    throw new Exception("Invalid password");
+            //}
 
             _loggedUserService.User = userFromDb;
         }

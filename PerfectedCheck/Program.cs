@@ -9,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProductiveCellDBContext>();
-builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<PasswordHashingService, PasswordHashingService>();
-builder.Services.AddTransient<INoteService, NoteService>();
+builder.Services.AddTransient<UserService, UserService>();
+builder.Services.AddTransient<NoteService, NoteService>();
+builder.Services.AddTransient<TaskService, TaskService>();
 
 builder.Services.AddSingleton<LoggedUserService>();
 
@@ -58,6 +59,12 @@ app.MapControllerRoute(
     name: "delete",
     pattern: "delete",
     defaults: new { controller = "Note", action = "Delete" });
+
+// Todo list
+app.MapControllerRoute(
+    name: "my_todo",
+    pattern: "my_todo",
+    defaults: new { controller = "Task", action = "Index" });
 
 //Authentication
 

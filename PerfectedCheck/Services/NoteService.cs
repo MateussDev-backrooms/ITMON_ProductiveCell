@@ -19,28 +19,33 @@ namespace PerfectedCheck.Services
 
         public int Create(NoteModel model)
         {
+            if (!_loggedUserService.IsLoggedIn) throw new Exception("Must be logged in to create note");
+
+            var user = _context.Users.Find(_loggedUserService.User.Id);
             NoteModel newNote = new NoteModel
             {
-                Id = GenerateRandomID(),
+                
                 CreatedTime = DateTime.UtcNow,
-                Owner = _loggedUserService.User,
+                Owner = user,
                 Title = model.Title,
                 Content = model.Content,
             };
-            if(newNote.Title == null)
+            if(newNote.Title == "")
             {
                 newNote.Title = "New Note";
             }
 
             _context.Notes.Add(newNote);
+            _context.SaveChanges();
             return newNote.Id;
         }
 
         public void Update(NoteModel model)
         {
-            NoteModel noteFromDb = _context.Notes.Find(model.Id);
-            if(noteFromDb == null) throw new Exception("Note not found");
+            NoteModel noteFromDb = _context.Notes.Include(n => n.Owner).FirstOrDefault(n => n.Id == model.Id);
+            if (noteFromDb == null) throw new Exception("Note not found");
             if (!_loggedUserService.IsLoggedIn) throw new Exception("Must be logged in to edit note");
+            if (_loggedUserService.User == null) throw new Exception("Logged-in user not found");
             if (_loggedUserService.User.Id != noteFromDb.Owner.Id) throw new Exception("Cannot edit notes not owned by you");
 
             noteFromDb.Title = model.Title;
@@ -52,9 +57,10 @@ namespace PerfectedCheck.Services
 
         public void Delete(int id)
         {
-            NoteModel noteFromDb = _context.Notes.Find(id);
+            NoteModel noteFromDb = _context.Notes.Include(n => n.Owner).FirstOrDefault(n => n.Id == id);
             if (noteFromDb == null) throw new Exception("Note not found");
             if (!_loggedUserService.IsLoggedIn) throw new Exception("Must be logged in to delete note");
+            if (_loggedUserService.User == null) throw new Exception("Logged-in user not found");
             if (_loggedUserService.User.Id != noteFromDb.Owner.Id) throw new Exception("Cannot delete notes not owned by you");
 
             _context.Notes.Remove(noteFromDb);
@@ -63,7 +69,7 @@ namespace PerfectedCheck.Services
 
         public NoteModel GetNoteFromId(int id)
         {
-            return _context.Notes.Find(id);
+            return _context.Notes.Include(n => n.Owner).ToList().Find(n => n.Id == id);
         }
 
         public List<NoteModel> GetAllNotesOfOwner(int ownerId)

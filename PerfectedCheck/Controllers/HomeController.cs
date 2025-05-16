@@ -4,39 +4,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PerfectedCheck.Data;
 using PerfectedCheck.Models;
+using PerfectedCheck.Services;
 
 namespace PerfectedCheck.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ProductiveCellDBContext _context;
-        private readonly UserManager<UserModel> _userManager;
+        private readonly UserService _userService;
+        private readonly NoteService _noteService;
+        
 
-        public HomeController(ILogger<HomeController> logger, ProductiveCellDBContext context, UserManager<UserModel> userManager)
+
+        public HomeController(UserService userService, NoteService noteService)
         {
-            _logger = logger;
-            _context = context;
-            _userManager = userManager;
+            _noteService = noteService;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
             //Load note view when user logged in. Load empty view if not
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null)
+            if(_userService.IsLoggedIn())
             {
-                var model = new HomeViewModel
+                var homemodel = new HomeViewModel
                 {
-                    Notes = _context.Notes
-                    .Include(n => n.Owner)
-                    .OrderByDescending(n => n.CreatedTime)
-                    .Where(n => n.Owner.Id == user.Id)
-                    .ToList()
+                    Notes = _noteService.GetAllNotesOfOwner(_userService.GetMyLoggedUser().Id)
                 };
-                return View(model);
-            }
-            else
+                return View(homemodel);
+            } else
             {
                 return View(new HomeViewModel { Notes = new List<NoteModel>() });
             }

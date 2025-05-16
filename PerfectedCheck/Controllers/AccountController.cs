@@ -31,30 +31,24 @@ namespace PerfectedCheck.Controllers
         public IActionResult Register(RegisterViewModel model)
         {
             _userManager.Create(model);
-            _userManager.LogIn(
-                new LoginViewModel
-                {
-                    Password = model.Password,
-                    Username = model.Username,
-                }
-                );
 
             return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 _userManager.LogIn(model);
+                return RedirectToAction("Index", "Home");
 
             }
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             _userManager.LogOut();
             return RedirectToAction("Index", "Home");

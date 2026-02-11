@@ -13,7 +13,7 @@ namespace PerfectedCheck.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=productivity_cell;user=root;password=Mo2016cq?;port=3306");
+            optionsBuilder.UseMySQL("server=localhost;database=productivity_cell;user=root;password=AAAAAAAAAAAAAAAAAA;port=3306");
         }
     }
 }
